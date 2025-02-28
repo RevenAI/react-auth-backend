@@ -1,3 +1,12 @@
+# Quick Note About the Project
+React-Auth-Backend is a backend project built with Node.js and Express.js. It serves as the backend for the React-Auth frontend application, which is built with React.js.
+
+This project was developed to master best practices for managing JWT authentication, ensuring secure token handling between the backend and frontend (React.js/Next.js).
+
+Both projects work together to implement a secure authentication system, including access and refresh tokens.
+
+# Feel free, clone the repo and use it for your practice!!
+
 # Important Environment Variables
 
 To ensure the application works correctly, the following environment variables must be set:
