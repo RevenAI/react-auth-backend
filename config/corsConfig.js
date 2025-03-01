@@ -1,13 +1,21 @@
-const API_URL = process.env.CLIENT_API_URL || process.env.PROD_API_URL;
+const allowedOrigins = require('./allowedOrigins');
+
+const allowDevTools = (origin) => {
+  return process.env.NODE_ENV === "development" && !origin;
+};
 
 const corsOptions = {
-  origin: API_URL,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || allowDevTools(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
+  optionsSuccessStatus: 200
 };
 
-module.exports = {
-  corsOptions,
-  API_URL,
-};
+module.exports = corsOptions;

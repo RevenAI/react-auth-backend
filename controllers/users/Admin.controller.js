@@ -140,7 +140,10 @@ exports.loginAdmin = async (req, res) => {
             statusCode: 200,
             status: "Success",
             message: "Login successful",
-            accessToken
+            data: {
+                accessToken,
+                role: admin.role
+            }
         });
 
     } catch (err) {
@@ -237,18 +240,18 @@ exports.refreshAdminToken = async (req, res) => {
  */
 exports.fetchAllAdmins = async (req, res) => {
 
-    const {
-        userID: authID
-    } = req.user;
+       const {
+           userID: authID
+       } = req.user;
 
-    if (!authID) {
-        return res.status(403).json({
-            statusCode: 403,
-            status: 'Unathorized',
-            message: 'You are not authorized to perform this action'
-        });
-    }
-
+       if (!authID) {
+           return res.status(403).json({
+               statusCode: 403,
+               status: 'Unathorized',
+               message: 'You are not authorized to perform this action'
+           });
+       }
+  
 
     try {
         const admins = await Admin.find({});

@@ -4,24 +4,33 @@ const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+
 const corsOptions = require("../config/corsConfig");
+const allowedOrigins = require("../config/allowedOrigins"); 
+const corsCredentials = require("../middlewares/corsCredentials");
+
 const adminRouter = require("../routes/users/Admin.router");
+
 const app = express();
-cookieParser = require("cookie-parser");
 
-app.use(cookieParser());
+// Security Middleware 
+app.use(helmet());
 
-//cors configuration
+// Handle CORS Credentials (Handles Access-Control-Allow-Origin, etc.)
+app.use(corsCredentials);
+
+// CORS Configuration 
 app.use(cors(corsOptions));
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: true
-}));
-app.use(helmet());
-app.use(compression());
-app.use(morgan("dev"));
+// Essential Middlewares
+app.use(cookieParser());  // Parses cookies
+app.use(express.json());  // Parses JSON request bodies
+app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data
+
+// Performance Middleware
+app.use(compression()); // Compresses response bodies
+app.use(morgan("dev")); // Logs requests
 
 // Routes
 app.use("/admins", adminRouter);
