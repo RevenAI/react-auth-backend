@@ -10,7 +10,7 @@ const Admin = require('../../models/users/Admin.model');
 
 /**
  * @desc    create/register admin
- * @route   POST /admins
+ * @route   POST /admins/register
  * @access  Private (Master Admin Only)
  */
 exports.registerAdmin = async (req, res) => {
@@ -240,18 +240,17 @@ exports.refreshAdminToken = async (req, res) => {
  */
 exports.fetchAllAdmins = async (req, res) => {
 
-       const {
-           userID: authID
-       } = req.user;
+    const {
+        userID: authID
+    } = req.user;
 
-       if (!authID) {
-           return res.status(403).json({
-               statusCode: 403,
-               status: 'Unathorized',
-               message: 'You are not authorized to perform this action'
-           });
-       }
-  
+    if (!authID) {
+        return res.status(403).json({
+            statusCode: 403,
+            status: 'Unathorized',
+            message: 'You are not authorized to perform this action'
+        });
+    }
 
     try {
         const admins = await Admin.find({});

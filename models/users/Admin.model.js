@@ -33,6 +33,10 @@ const adminSchema = new mongoose.Schema({
              message: "Invalid email address",
          }, */
     },
+    postsCreated: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post"
+    }],
     password: {
         type: String,
         required: [true, "Password is required"],

@@ -13,7 +13,7 @@ const {
 const authUser = require("../../middlewares/authUser");
 
 // Admin routes
-adminRouter.post("/", authUser, registerAdmin);
+adminRouter.post("/register", authUser, registerAdmin);
 adminRouter.get("/", authUser, fetchAllAdmins);
 adminRouter.get("/:adminID", authUser, fetchAdminByID);
 adminRouter.patch("/:adminID/update", authUser, updateAdminByID);
